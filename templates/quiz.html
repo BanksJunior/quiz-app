@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eef2f3, #d9e4f5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            width: 520px;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+
+        .progress {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 22px;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        form button {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #e0e0e0;
+            background: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        form button:hover {
+            background: #f7f7f7;
+            transform: scale(1.02);
+            border-color: #bbb;
+        }
+
+        form button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="progress">
+        Question {{ index }} / {{ total }}
+    </div>
+
+    <div class="question">
+        {{ question.question }}
+    </div>
+
+    <form method="POST">
+        {% for option in question.options %}
+            <button type="submit" name="answer" value="{{ option }}">
+                {{ option }}
+            </button>
+        {% endfor %}
+    </form>
+
+</div>
+
+</body>
+</html>
