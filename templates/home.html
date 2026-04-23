@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f4f6f8, #e9eef5);
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 40px;
+            font-size: 40px;
+        }
+
+        p {
+            color: #555;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-decoration: none;
+            color: black;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+        }
+
+        .emoji {
+            font-size: 30px;
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎯 Quiz App</h1>
+    <p>Select a category to start</p>
+
+    <div class="container">
+        <a class="card" href="/start/anime">
+            <span class="emoji">🎬</span>
+            Anime
+        </a>
+
+        <a class="card" href="/start/movies">
+            <span class="emoji">🎥</span>
+            Movies
+        </a>
+
+        <a class="card" href="/start/series">
+            <span class="emoji">📺</span>
+            Series
+        </a>
+
+        <a class="card" href="/start/football">
+            <span class="emoji">⚽</span>
+            Football
+        </a>
+
+        <a class="card" href="/start/music">
+            <span class="emoji">🎵</span>
+            Music
+        </a>
+
+        <a class="card" href="/start/animated_series">
+            <span class="emoji">🦸</span>
+            Animated Series
+        </a>
+    </div>
+
+</body>
+</html>
