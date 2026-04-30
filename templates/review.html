@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Review Answers</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f8;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .wrong {
+            color: red;
+        }
+
+        .correct {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Review Incorrect Answers</h2>
+
+{% if wrong|length == 0 %}
+    <p>🎉 No wrong answers! Perfect score!</p>
+{% endif %}
+
+{% for item in wrong %}
+<div class="card">
+    <p><b>Question:</b> {{ item.question }}</p>
+    <p class="wrong">Your answer: {{ item.your_answer }}</p>
+    <p class="correct">Correct answer: {{ item.correct_answer }}</p>
+</div>
+{% endfor %}
+
+</body>
+</html>

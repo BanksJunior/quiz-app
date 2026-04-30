@@ -4,6 +4,10 @@
     <title>Quiz App</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -13,71 +17,108 @@
 
         header {
             text-align: center;
-            padding: 50px 20px 20px;
+            padding: 40px 16px 20px;
         }
 
         header h1 {
-            font-size: 42px;
-            margin-bottom: 10px;
+            font-size: 40px;
+            margin-bottom: 8px;
         }
 
         header p {
             color: #666;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .container {
             max-width: 1000px;
-            margin: 30px auto 60px;
+            margin: 20px auto 60px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 0 20px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            padding: 0 16px;
         }
 
         .card {
             background: white;
-            padding: 25px;
+            padding: 22px;
             border-radius: 16px;
             text-decoration: none;
             color: #222;
             text-align: center;
             box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             position: relative;
             overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
         }
 
         .emoji {
-            font-size: 34px;
+            font-size: 32px;
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .card h3 {
             margin: 0;
-            font-size: 18px;
+            font-size: 16px;
         }
 
+        /* shimmer effect */
         .card::after {
             content: "";
             position: absolute;
             top: 0;
-            left: -100%;
+            left: -120%;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.05);
+            background: rgba(0,0,0,0.04);
             transform: skewX(-20deg);
             transition: 0.5s;
         }
 
         .card:hover::after {
             left: 120%;
+        }
+
+        /* 📱 MOBILE FIX */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 28px;
+            }
+
+            header p {
+                font-size: 13px;
+            }
+
+            .container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .card {
+                padding: 18px;
+            }
+
+            .emoji {
+                font-size: 26px;
+            }
+
+            .card h3 {
+                font-size: 14px;
+            }
+        }
+
+        /* VERY SMALL PHONES */
+        @media (max-width: 360px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>

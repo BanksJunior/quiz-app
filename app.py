@@ -4,41 +4,37 @@ from questions import questions
 app = Flask(__name__)
 app.secret_key = "quiz_secret_key"
 
-# Home
+
 @app.route("/")
 def home():
     return render_template("home.html")
 
 
-# Start quiz category
 @app.route("/start/<category>")
 def start(category):
 
-    # ✅ Safety check (prevents KeyError crash)
     if category not in questions:
         return "Invalid category", 404
 
     session["category"] = category
     session["score"] = 0
     session["q_index"] = 0
+    session["wrong"] = []
 
-    session["quiz"] = questions[category]  # no shuffle (as you wanted)
+    session["quiz"] = questions[category]
 
     return redirect(url_for("quiz"))
 
 
-# Quiz page
 @app.route("/quiz", methods=["GET", "POST"])
 def quiz():
 
     quiz = session.get("quiz", [])
     index = session.get("q_index", 0)
 
-    # If no quiz found (extra safety)
     if not quiz:
         return redirect(url_for("home"))
 
-    # If finished quiz
     if index >= len(quiz):
         return redirect(url_for("result"))
 
@@ -46,8 +42,18 @@ def quiz():
 
     if request.method == "POST":
         selected = request.form.get("answer")
+        correct = question_data["answer"]
 
-        if selected == question_data["answer"]:
+        # store wrong answers
+        if selected != correct:
+            wrong = session.get("wrong", [])
+            wrong.append({
+                "question": question_data["question"],
+                "selected": selected,
+                "correct": correct
+            })
+            session["wrong"] = wrong
+        else:
             session["score"] += 1
 
         session["q_index"] += 1
@@ -61,11 +67,13 @@ def quiz():
     )
 
 
-# Result page
 @app.route("/result")
 def result():
-    score = session.get("score", 0)
-    return render_template("result.html", score=score)
+    return render_template(
+        "result.html",
+        score=session.get("score", 0),
+        wrong=session.get("wrong", [])
+    )
 
 
 if __name__ == "__main__":
