@@ -9,24 +9,36 @@ app.secret_key = "quiz_secret_key"
 def home():
     return render_template("home.html")
 
+
 # Start quiz category
 @app.route("/start/<category>")
 def start(category):
+
+    # ✅ Safety check (prevents KeyError crash)
+    if category not in questions:
+        return "Invalid category", 404
+
     session["category"] = category
     session["score"] = 0
     session["q_index"] = 0
 
-    session["quiz"] = questions[category]  # no shuffle
+    session["quiz"] = questions[category]  # no shuffle (as you wanted)
 
     return redirect(url_for("quiz"))
+
 
 # Quiz page
 @app.route("/quiz", methods=["GET", "POST"])
 def quiz():
+
     quiz = session.get("quiz", [])
     index = session.get("q_index", 0)
 
-    # If finished
+    # If no quiz found (extra safety)
+    if not quiz:
+        return redirect(url_for("home"))
+
+    # If finished quiz
     if index >= len(quiz):
         return redirect(url_for("result"))
 
@@ -48,15 +60,13 @@ def quiz():
         total=len(quiz)
     )
 
+
 # Result page
 @app.route("/result")
 def result():
-    return render_template("result.html", score=session.get("score", 0))
+    score = session.get("score", 0)
+    return render_template("result.html", score=score)
 
-
-# ✅ RAILWAY FIX (IMPORTANT)
-import os
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)

@@ -5,7 +5,7 @@
 
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
             background: linear-gradient(135deg, #eef2f3, #d9e4f5);
             display: flex;
             justify-content: center;
@@ -16,44 +16,67 @@
 
         .card {
             background: white;
-            width: 520px;
+            width: 540px;
             padding: 30px;
-            border-radius: 14px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
         }
 
-        .progress {
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
             font-size: 14px;
-            color: #777;
-            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #eee;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            width: 0%;
+            transition: width 0.4s ease;
         }
 
         .question {
             font-size: 22px;
-            margin-bottom: 25px;
             font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: #ff4d4d;
         }
 
         form button {
             width: 100%;
             padding: 12px;
             margin: 8px 0;
-            border: 2px solid #e0e0e0;
+            border: 2px solid #eee;
             background: #fff;
             border-radius: 10px;
             cursor: pointer;
             font-size: 16px;
-            transition: all 0.2s ease;
+            transition: 0.2s ease;
         }
 
         form button:hover {
-            background: #f7f7f7;
+            background: #f5f5f5;
             transform: scale(1.02);
-            border-color: #bbb;
+            border-color: #ccc;
         }
 
-        form button:active {
-            transform: scale(0.98);
+        .warning {
+            color: #ff4d4d;
         }
     </style>
 </head>
@@ -62,15 +85,20 @@
 
 <div class="card">
 
-    <div class="progress">
-        Question {{ index }} / {{ total }}
+    <div class="top">
+        <div>Question {{ index }} / {{ total }}</div>
+        <div class="timer">⏳ <span id="time">15</span>s</div>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="progress"></div>
     </div>
 
     <div class="question">
         {{ question.question }}
     </div>
 
-    <form method="POST">
+    <form id="quizForm" method="POST">
         {% for option in question.options %}
             <button type="submit" name="answer" value="{{ option }}">
                 {{ option }}
@@ -79,6 +107,34 @@
     </form>
 
 </div>
+
+<script>
+    let timeLeft = 15;
+    const timerEl = document.getElementById("time");
+    const form = document.getElementById("quizForm");
+
+    const total = {{ total }};
+    const current = {{ index }};
+
+    // progress bar
+    let progress = (current / total) * 100;
+    document.getElementById("progress").style.width = progress + "%";
+
+    // countdown
+    const timer = setInterval(() => {
+        timeLeft--;
+        timerEl.innerText = timeLeft;
+
+        if (timeLeft <= 5) {
+            timerEl.classList.add("warning");
+        }
+
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            form.submit(); // auto skip question
+        }
+    }, 1000);
+</script>
 
 </body>
 </html>
