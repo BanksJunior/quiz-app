@@ -4,168 +4,70 @@
     <title>Quiz App</title>
 
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #eef2f3, #dfe9f3);
-            color: #222;
-        }
-
-        header {
+            font-family: Arial;
             text-align: center;
-            padding: 40px 16px 20px;
+            background: #eef2f3;
+            padding: 40px;
         }
 
-        header h1 {
-            font-size: 40px;
-            margin-bottom: 8px;
-        }
-
-        header p {
-            color: #666;
-            font-size: 15px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 20px auto 60px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 16px;
-            padding: 0 16px;
-        }
-
-        .card {
-            background: white;
-            padding: 22px;
-            border-radius: 16px;
-            text-decoration: none;
-            color: #222;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            transition: all 0.2s ease;
-            position: relative;
-            overflow: hidden;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
-        }
-
-        .emoji {
-            font-size: 32px;
-            display: block;
+        h1 {
             margin-bottom: 10px;
         }
 
-        .card h3 {
-            margin: 0;
-            font-size: 16px;
+        p {
+            color: #555;
         }
 
-        /* shimmer effect */
-        .card::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -120%;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.04);
-            transform: skewX(-20deg);
-            transition: 0.5s;
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
         }
 
-        .card:hover::after {
-            left: 120%;
+        .card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 180px;
+            height: 90px;
+            background: white;
+            border-radius: 12px;
+            text-decoration: none;
+            color: black;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: 0.2s ease;
+            font-weight: bold;
         }
 
-        /* 📱 MOBILE FIX */
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 28px;
-            }
-
-            header p {
-                font-size: 13px;
-            }
-
-            .container {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-
-            .card {
-                padding: 18px;
-            }
-
-            .emoji {
-                font-size: 26px;
-            }
-
-            .card h3 {
-                font-size: 14px;
-            }
-        }
-
-        /* VERY SMALL PHONES */
-        @media (max-width: 360px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
+        .card:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
 
 <body>
 
-<header>
-    <h1>🎯 Quiz App</h1>
-    <p>Choose a category and test your knowledge</p>
-</header>
+<h1>🎯 Quiz App</h1>
+<p>Select a category</p>
 
-<div class="container">
+<div class="card-container">
 
-    <a class="card" href="/start/anime">
-        <span class="emoji">🎬</span>
-        <h3>Anime</h3>
-    </a>
+    <a class="card" href="/start/anime">🎬 Anime</a>
 
-    <a class="card" href="/start/movies">
-        <span class="emoji">🎥</span>
-        <h3>Movies</h3>
-    </a>
+    <a class="card" href="/start/animated_series">📺 Animated Series</a>
 
-    <a class="card" href="/start/series">
-        <span class="emoji">📺</span>
-        <h3>Series</h3>
-    </a>
+    <a class="card" href="/start/kdrama">🎭 K-Drama</a>
 
-    <a class="card" href="/start/football">
-        <span class="emoji">⚽</span>
-        <h3>Football</h3>
-    </a>
+    <a class="card" href="/start/football">⚽ Football</a>
 
-    <a class="card" href="/start/music">
-        <span class="emoji">🎵</span>
-        <h3>Music</h3>
-    </a>
+    <a class="card" href="/start/movies">🎥 Movies</a>
 
-    <a class="card" href="/start/animated_series">
-        <span class="emoji">🦸</span>
-        <h3>Animated Series</h3>
-    </a>
+    <a class="card" href="/start/music">🎵 Music</a>
 
-    <a class="card" href="/start/kdrama">
-        <span class="emoji">🎭</span>
-        <h3>K-Drama</h3>
-    </a>
+    <a class="card" href="/start/series">📺 Series</a>
 
 </div>
 

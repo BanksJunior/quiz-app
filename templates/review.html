@@ -2,45 +2,107 @@
 <html>
 <head>
     <title>Review Answers</title>
+
     <style>
         body {
-            font-family: Arial;
-            background: #f4f6f8;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #eef2f3, #d9e4f5);
+            margin: 0;
             padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
         }
 
         .card {
             background: white;
-            padding: 15px;
+            padding: 18px;
             margin-bottom: 15px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transition: 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
         }
 
         .wrong {
-            color: red;
+            color: #e74c3c;
+            font-weight: bold;
         }
 
         .correct {
-            color: green;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .question {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .empty {
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+            margin-top: 40px;
+        }
+
+        .btn {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            background: #4facfe;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
 </head>
+
 <body>
 
-<h2>Review Incorrect Answers</h2>
+<h2>📘 Review Incorrect Answers</h2>
+
+<div class="container">
 
 {% if wrong|length == 0 %}
-    <p>🎉 No wrong answers! Perfect score!</p>
+    <div class="empty">
+        🎉 Perfect! No wrong answers.
+    </div>
+{% else %}
+
+    {% for item in wrong %}
+    <div class="card">
+        <div class="question">Q: {{ item.question }}</div>
+
+        <div class="wrong">
+            ❌ Your Answer: {{ item.selected }}
+        </div>
+
+        <div class="correct">
+            ✅ Correct Answer: {{ item.correct }}
+        </div>
+    </div>
+    {% endfor %}
+
 {% endif %}
 
-{% for item in wrong %}
-<div class="card">
-    <p><b>Question:</b> {{ item.question }}</p>
-    <p class="wrong">Your answer: {{ item.your_answer }}</p>
-    <p class="correct">Correct answer: {{ item.correct_answer }}</p>
+<a class="btn" href="/">🏠 Back Home</a>
+
 </div>
-{% endfor %}
 
 </body>
 </html>

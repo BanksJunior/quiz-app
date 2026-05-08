@@ -3,14 +3,14 @@
 <head>
     <title>Result</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, #eef2f3, #d9e4f5);
             display: flex;
             justify-content: center;
@@ -25,21 +25,26 @@
             border-radius: 18px;
             text-align: center;
             box-shadow: 0 18px 40px rgba(0,0,0,0.15);
+            animation: pop 0.4s ease;
         }
 
-        h1 {
-            margin-bottom: 10px;
-            font-size: 26px;
+        @keyframes pop {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
+
+        .emoji { font-size: 50px; margin-bottom: 10px; }
+
+        h1 { font-size: 26px; }
 
         .score {
             font-size: 22px;
-            margin: 15px 0;
             font-weight: bold;
+            margin: 10px 0;
         }
 
         .bar {
-            height: 10px;
+            height: 12px;
             background: #eee;
             border-radius: 20px;
             overflow: hidden;
@@ -51,6 +56,12 @@
             width: 0%;
             background: linear-gradient(90deg, #00c6ff, #0072ff);
             transition: width 1s ease;
+        }
+
+        .message {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
         }
 
         .wrong-box {
@@ -67,33 +78,21 @@
             font-size: 14px;
         }
 
-        .correct { color: green; }
-        .your { color: red; }
+        .correct { color: green; font-weight: bold; }
+        .your { color: red; font-weight: bold; }
 
         a {
             display: inline-block;
-            margin-top: 20px;
+            margin: 6px;
             padding: 12px 16px;
             background: #4facfe;
             color: white;
             text-decoration: none;
             border-radius: 10px;
+            font-weight: bold;
         }
 
-        /* 📱 MOBILE */
-        @media (max-width: 600px) {
-            .card {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 22px;
-            }
-
-            .score {
-                font-size: 18px;
-            }
-        }
+        .retry { background: #ff7b7b; }
     </style>
 </head>
 
@@ -101,7 +100,9 @@
 
 <div class="card">
 
-    <h1>Quiz Completed 🎯</h1>
+    <div class="emoji" id="emoji">🎯</div>
+
+    <h1>Quiz Completed</h1>
 
     <div class="score">
         Score: {{ score }}
@@ -111,31 +112,55 @@
         <div class="fill" id="fill"></div>
     </div>
 
+    <div class="message" id="message"></div>
+
     <h3>Review Mistakes ❌</h3>
 
     {% if wrong|length == 0 %}
-        <p>Perfect! No mistakes 🎉</p>
+        <p>🎉 Perfect! No mistakes</p>
     {% else %}
         <div class="wrong-box">
             {% for w in wrong %}
                 <div class="wrong-item">
                     <p><b>Q:</b> {{ w.question }}</p>
-                    <p class="your"><b>Your Answer:</b> {{ w.selected }}</p>
-                    <p class="correct"><b>Correct:</b> {{ w.correct }}</p>
+                    <p class="your">Your Answer: {{ w.selected }}</p>
+                    <p class="correct">Correct: {{ w.correct }}</p>
                 </div>
             {% endfor %}
         </div>
     {% endif %}
 
-    <a href="/">🏠 Home</a>
+    <div class="btns">
+        <a href="/">🏠 Home</a>
+        <a class="retry" href="/start/{{ category }}">🔁 Retry</a>
+    </div>
 
 </div>
 
 <script>
     let score = {{ score }};
-    let max = 20;
-    let percent = (score / max) * 100;
+    let total = {{ total }};
+
+    let percent = total > 0 ? (score / total) * 100 : 0;
+
     document.getElementById("fill").style.width = percent + "%";
+
+    let emoji = "";
+    let message = "";
+
+    if (percent >= 80) {
+        emoji = "🏆";
+        message = "Legendary performance!";
+    } else if (percent >= 50) {
+        emoji = "🔥";
+        message = "Good job! Keep improving!";
+    } else {
+        emoji = "📚";
+        message = "Keep practicing!";
+    }
+
+    document.getElementById("emoji").innerText = emoji;
+    document.getElementById("message").innerText = message;
 </script>
 
 </body>

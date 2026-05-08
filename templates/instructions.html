@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Instructions</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #eef2f3, #d9e4f5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        ul {
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 18px;
+            background: #4facfe;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .info {
+            margin-top: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>📘 Instructions</h1>
+
+    <p class="info">
+        Category: <b>{{ category }}</b>
+    </p>
+
+    <ul>
+        <li>⏳ 15 seconds per question</li>
+        <li>🎯 1 mark per correct answer</li>
+        <li>❌ Wrong answers will be reviewed at the end</li>
+        <li>📊 Final score shown at the end</li>
+    </ul>
+
+    <a class="btn" href="/start/{{ category }}">
+        Start Quiz ▶
+    </a>
+
+</div>
+
+</body>
+</html>
