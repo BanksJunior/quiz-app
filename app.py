@@ -11,14 +11,28 @@ def home():
     return render_template("home.html")
 
 
-# ---------------- START QUIZ ----------------
-@app.route("/start/<category>")
-def start(category):
+# ---------------- INTRO PAGE (NEW NETFLIX STEP) ----------------
+@app.route("/intro/<category>")
+def intro(category):
+
+    category = category.lower().replace(" ", "_")
 
     if category not in questions:
         return "Invalid category", 404
 
-    session["category"] = category.lower().replace(" ", "_")
+    return render_template("intro.html", category=category)
+
+
+# ---------------- START QUIZ ----------------
+@app.route("/start/<category>")
+def start(category):
+
+    category = category.lower().replace(" ", "_")
+
+    if category not in questions:
+        return "Invalid category", 404
+
+    session["category"] = category
     session["score"] = 0
     session["q_index"] = 0
     session["wrong"] = []
@@ -34,23 +48,21 @@ def quiz():
     quiz_list = session.get("quiz", [])
     index = session.get("q_index", 0)
 
-    # 🔥 END QUIZ
+    # END QUIZ
     if index >= len(quiz_list):
         return redirect(url_for("result"))
 
     question_data = quiz_list[index]
 
-    # ---------------- ANSWER HANDLING ----------------
+    # ANSWER HANDLING
     if request.method == "POST":
 
         selected = request.form.get("answer")
         correct = question_data["answer"]
 
-        # 🔥 SAFE SESSION INIT (important for stability)
         session.setdefault("score", 0)
         session.setdefault("wrong", [])
 
-        # CHECK ANSWER
         if selected == correct:
             session["score"] += 1
         else:
@@ -60,13 +72,11 @@ def quiz():
                 "correct": correct
             })
 
-        # NEXT QUESTION
         session["q_index"] = index + 1
         session.modified = True
 
         return redirect(url_for("quiz"))
 
-    # ---------------- RENDER QUESTION ----------------
     return render_template(
         "quiz.html",
         question=question_data,

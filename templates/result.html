@@ -3,165 +3,210 @@
 <head>
     <title>Result</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <style>
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #eef2f3, #d9e4f5);
-            display: flex;
-            justify-content: center;
-            padding: 20px;
+            color: white;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        .card {
-            background: white;
-            width: 100%;
-            max-width: 650px;
-            padding: 30px;
-            border-radius: 18px;
+        /* BACKGROUND */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: url("/static/images/{{ category }}.jpeg") center/cover no-repeat;
+            filter: brightness(0.25) blur(2px);
+            transform: scale(1.05);
+            z-index: 0;
+        }
+
+        /* DARK OVERLAY */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center,
+                rgba(0,0,0,0.2),
+                rgba(0,0,0,0.92)
+            );
+            z-index: 0;
+        }
+
+        /* CONTAINER */
+        .container {
+            position: relative;
+            z-index: 1;
+            height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
             text-align: center;
-            box-shadow: 0 18px 40px rgba(0,0,0,0.15);
-            animation: pop 0.4s ease;
+
+            animation: fadeIn 0.6s ease;
+        }
+
+        /* TITLE */
+        h1 {
+            font-size: 64px;
+            margin: 0;
+            font-weight: 800;
+            animation: pop 0.6s ease;
+        }
+
+        /* SCORE */
+        .score {
+            margin-top: 20px;
+            font-size: 34px;
+            font-weight: bold;
+            color: #e50914;
+
+            padding: 14px 22px;
+            border-radius: 14px;
+
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        /* MESSAGE */
+        .message {
+            margin-top: 12px;
+            font-size: 16px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* STATS */
+        .stats {
+            margin-top: 28px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat {
+            background: rgba(255,255,255,0.08);
+            padding: 14px 20px;
+            border-radius: 12px;
+            min-width: 120px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat span {
+            display: block;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .stat small {
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* BUTTONS */
+        .buttons {
+            margin-top: 35px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            transition: 0.25s ease;
+        }
+
+        .home {
+            background: #e50914;
+            color: white;
+        }
+
+        .retry {
+            background: rgba(255,255,255,0.12);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.08);
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes pop {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
-        .emoji { font-size: 50px; margin-bottom: 10px; }
-
-        h1 { font-size: 26px; }
-
-        .score {
-            font-size: 22px;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .bar {
-            height: 12px;
-            background: #eee;
-            border-radius: 20px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
-
-        .fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #00c6ff, #0072ff);
-            transition: width 1s ease;
-        }
-
-        .message {
-            font-size: 16px;
-            color: #555;
-            margin-bottom: 20px;
-        }
-
-        .wrong-box {
-            margin-top: 25px;
-            text-align: left;
-        }
-
-        .wrong-item {
-            background: #fff3f3;
-            border-left: 4px solid red;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .correct { color: green; font-weight: bold; }
-        .your { color: red; font-weight: bold; }
-
-        a {
-            display: inline-block;
-            margin: 6px;
-            padding: 12px 16px;
-            background: #4facfe;
-            color: white;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: bold;
-        }
-
-        .retry { background: #ff7b7b; }
     </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="container">
 
-    <div class="emoji" id="emoji">🎯</div>
-
-    <h1>Quiz Completed</h1>
+    <h1>Episode Complete</h1>
 
     <div class="score">
-        Score: {{ score }}
+        {{ score }} / {{ wrong|length + score }}
     </div>
 
-    <div class="bar">
-        <div class="fill" id="fill"></div>
+    <div class="message">
+        {{ category|capitalize }} Quiz Finished
     </div>
 
-    <div class="message" id="message"></div>
-
-    <h3>Review Mistakes ❌</h3>
-
-    {% if wrong|length == 0 %}
-        <p>🎉 Perfect! No mistakes</p>
-    {% else %}
-        <div class="wrong-box">
-            {% for w in wrong %}
-                <div class="wrong-item">
-                    <p><b>Q:</b> {{ w.question }}</p>
-                    <p class="your">Your Answer: {{ w.selected }}</p>
-                    <p class="correct">Correct: {{ w.correct }}</p>
-                </div>
-            {% endfor %}
+    <div class="stats">
+        <div class="stat">
+            <span>{{ score }}</span>
+            <small>Correct</small>
         </div>
-    {% endif %}
 
-    <div class="btns">
-        <a href="/">🏠 Home</a>
-        <a class="retry" href="/start/{{ category }}">🔁 Retry</a>
+        <div class="stat">
+            <span>{{ wrong|length }}</span>
+            <small>Wrong</small>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <a href="/">
+            <button class="btn home">🏠 Browse Again</button>
+        </a>
+
+        <a href="/start/{{ category }}">
+            <button class="btn retry">🔁 Replay</button>
+        </a>
     </div>
 
 </div>
-
-<script>
-    let score = {{ score }};
-    let total = {{ total }};
-
-    let percent = total > 0 ? (score / total) * 100 : 0;
-
-    document.getElementById("fill").style.width = percent + "%";
-
-    let emoji = "";
-    let message = "";
-
-    if (percent >= 80) {
-        emoji = "🏆";
-        message = "Legendary performance!";
-    } else if (percent >= 50) {
-        emoji = "🔥";
-        message = "Good job! Keep improving!";
-    } else {
-        emoji = "📚";
-        message = "Keep practicing!";
-    }
-
-    document.getElementById("emoji").innerText = emoji;
-    document.getElementById("message").innerText = message;
-</script>
 
 </body>
 </html>

@@ -2,105 +2,152 @@
 <html>
 <head>
     <title>Review Answers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #eef2f3, #d9e4f5);
             margin: 0;
-            padding: 20px;
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            color: white;
+            background: black;
+            overflow-x: hidden;
+        }
+
+        /* Netflix-style background */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            z-index: 0;
+        }
+
+        .bg {
+            position: fixed;
+            inset: 0;
+            background: url("/static/images/review.jpg") center/cover no-repeat;
+            filter: brightness(0.35);
+            z-index: -1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: auto;
+            padding: 30px 16px;
         }
 
         h2 {
             text-align: center;
+            font-size: 34px;
             margin-bottom: 25px;
         }
 
-        .container {
-            max-width: 800px;
-            margin: auto;
-        }
-
+        /* CARD */
         .card {
-            background: white;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            backdrop-filter: blur(14px);
+
             padding: 18px;
             margin-bottom: 15px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-radius: 14px;
+
             transition: 0.2s ease;
         }
 
         .card:hover {
             transform: translateY(-3px);
-        }
-
-        .wrong {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-
-        .correct {
-            color: #2ecc71;
-            font-weight: bold;
+            background: rgba(255,255,255,0.12);
         }
 
         .question {
             font-weight: bold;
-            margin-bottom: 8px;
+            font-size: 16px;
+            margin-bottom: 10px;
         }
 
+        .wrong {
+            color: #ff5a5a;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .correct {
+            color: #2ecc71;
+            font-weight: 600;
+        }
+
+        /* EMPTY STATE */
         .empty {
             text-align: center;
             font-size: 18px;
-            color: #666;
-            margin-top: 40px;
+            color: rgba(255,255,255,0.7);
+            margin-top: 60px;
         }
 
+        /* BUTTON */
         .btn {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
+            display: inline-block;
+            margin-top: 25px;
             text-decoration: none;
-            background: #4facfe;
+            background: #e50914;
             color: white;
-            padding: 10px 15px;
+            padding: 12px 18px;
             border-radius: 8px;
-            width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .center {
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
 
-<h2>📘 Review Incorrect Answers</h2>
+<div class="bg"></div>
 
 <div class="container">
 
-{% if wrong|length == 0 %}
-    <div class="empty">
-        🎉 Perfect! No wrong answers.
-    </div>
-{% else %}
+    <h2>📘 Review Your Answers</h2>
 
-    {% for item in wrong %}
-    <div class="card">
-        <div class="question">Q: {{ item.question }}</div>
-
-        <div class="wrong">
-            ❌ Your Answer: {{ item.selected }}
+    {% if wrong|length == 0 %}
+        <div class="empty">
+            🎉 Perfect score! No wrong answers.
         </div>
+    {% else %}
 
-        <div class="correct">
-            ✅ Correct Answer: {{ item.correct }}
+        {% for item in wrong %}
+        <div class="card">
+            <div class="question">Q: {{ item.question }}</div>
+
+            <div class="wrong">
+                ❌ Your Answer: {{ item.selected }}
+            </div>
+
+            <div class="correct">
+                ✅ Correct Answer: {{ item.correct }}
+            </div>
         </div>
+        {% endfor %}
+
+    {% endif %}
+
+    <div class="center">
+        <a class="btn" href="/">🏠 Back Home</a>
     </div>
-    {% endfor %}
-
-{% endif %}
-
-<a class="btn" href="/">🏠 Back Home</a>
 
 </div>
 

@@ -1,74 +1,135 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Quiz App</title>
+    <title>Quiz Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial;
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            color: white;
+            background: url("/static/images/home_bg.jpg") no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* DARK OVERLAY (Netflix style) */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center,
+                rgba(0,0,0,0.2),
+                rgba(0,0,0,0.88)
+            );
+            z-index: 0;
+        }
+
+        /* HEADER */
+        .header {
+            position: relative;
+            z-index: 1;
             text-align: center;
-            background: #eef2f3;
-            padding: 40px;
+            padding: 60px 20px 20px;
         }
 
-        h1 {
-            margin-bottom: 10px;
+        .header h1 {
+            font-size: 42px;
+            margin: 0;
+            font-weight: 800;
         }
 
-        p {
-            color: #555;
+        .header p {
+            color: rgba(255,255,255,0.7);
+            margin-top: 10px;
         }
 
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 20px;
+        /* CATEGORY GRID */
+        .grid {
+            position: relative;
+            z-index: 1;
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 18px;
+
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
         }
 
+        /* CATEGORY CARD */
         .card {
+            display: block;
+            text-decoration: none;
+            color: white;
+
+            height: 120px;
+            border-radius: 14px;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 180px;
-            height: 90px;
-            background: white;
-            border-radius: 12px;
-            text-decoration: none;
-            color: black;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: 0.2s ease;
-            font-weight: bold;
+
+            font-size: 18px;
+            font-weight: 700;
+
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+
+            backdrop-filter: blur(10px);
+
+            transition: all 0.25s ease;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .card:hover {
-            transform: scale(1.05);
+            transform: scale(1.08);
+            background: #e50914;
+            border-color: #e50914;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
         }
+
+        /* FOOTER TEXT */
+        .footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            margin-top: 40px;
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+        }
+
     </style>
 </head>
 
 <body>
 
-<h1>🎯 Quiz App</h1>
-<p>Select a category</p>
+<div class="header">
+    <h1>QuizFlix</h1>
+    <p>Choose your category</p>
+</div>
 
-<div class="card-container">
+<div class="grid">
 
-    <a class="card" href="/start/anime">🎬 Anime</a>
+    <a class="card" href="/intro/music">Music</a>
+    <a class="card" href="/intro/kdrama">K-Drama</a>
+    <a class="card" href="/intro/anime">Anime</a>
+    <a class="card" href="/intro/animated_series">Animated</a>
+    <a class="card" href="/intro/football">Football</a>
+    <a class="card" href="/intro/movies">Movies</a>
+    <a class="card" href="/intro/series">Series</a>
 
-    <a class="card" href="/start/animated_series">📺 Animated Series</a>
+</div>
 
-    <a class="card" href="/start/kdrama">🎭 K-Drama</a>
-
-    <a class="card" href="/start/football">⚽ Football</a>
-
-    <a class="card" href="/start/movies">🎥 Movies</a>
-
-    <a class="card" href="/start/music">🎵 Music</a>
-
-    <a class="card" href="/start/series">📺 Series</a>
-
+<div class="footer">
+    Powered by Flask • Quiz App
 </div>
 
 </body>

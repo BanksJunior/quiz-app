@@ -13,6 +13,7 @@
             padding: 16px;
             min-height: 100vh;
             position: relative;
+            color: white;
         }
 
         /* BACKGROUNDS */
@@ -51,78 +52,141 @@
             background-size: cover;
         }
 
-        /* OVERLAY */
+        /* DARK NETFLIX OVERLAY */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.55);
+            background: radial-gradient(circle at center,
+                rgba(0,0,0,0.25),
+                rgba(0,0,0,0.85)
+            );
             z-index: 0;
         }
 
+        /* CARD (NETFLIX STYLE) */
         .card {
             position: relative;
             z-index: 1;
-            background: white;
-            max-width: 560px;
-            margin: 40px auto;
-            padding: 22px;
-            border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+
+            max-width: 700px;
+            margin: 60px auto;
+            padding: 32px;
+
+            border-radius: 18px;
+
+            background: rgba(0,0,0,0.70);
+            backdrop-filter: blur(14px);
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+
+            animation: fadeIn .35s ease;
         }
 
         .top {
             display: flex;
             justify-content: space-between;
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 12px;
+            align-items: center;
+
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+
+            margin-bottom: 14px;
         }
 
         .timer {
             font-weight: bold;
-            color: #ff4d4d;
+            color: #ffd166;
         }
 
         .warning {
-            color: #ff4d4d;
+            color: #ff4d4d !important;
         }
 
+        /* PROGRESS */
         .progress-bar {
-            height: 8px;
-            background: #eee;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
             border-radius: 20px;
             overflow: hidden;
-            margin-bottom: 18px;
+            margin-bottom: 24px;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            background: linear-gradient(90deg, #e50914, #ff3b3b);
             width: 0%;
+            transition: width .4s ease;
         }
 
+        /* QUESTION */
         .question {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 18px;
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 28px;
         }
 
+        /* OPTIONS (NETFLIX RED HOVER) */
         form button {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             margin: 10px 0;
-            border: 2px solid #eee;
-            background: #fff;
-            border-radius: 10px;
-            cursor: pointer;
+
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.12);
+
+            background: rgba(255,255,255,0.06);
+            color: white;
+
             font-size: 15px;
+            font-weight: 600;
+
             text-align: left;
+
+            cursor: pointer;
+
+            transition: all 0.25s ease;
+        }
+
+        form button:hover {
+            background: #e50914;
+            border-color: #e50914;
+            transform: scale(1.02);
+        }
+
+        form button:active {
+            transform: scale(0.98);
+        }
+
+        /* ANIMATION */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .card {
+                margin: 25px auto;
+                padding: 20px;
+            }
+
+            .question {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
 
-<!-- 🔥 FIX IS HERE -->
 <body class="{{ category|lower|replace(' ', '_') }}">
 
 <div class="card">
