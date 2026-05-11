@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Intro</title>
+    <title>QuizFlix Welcome</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
         body {
@@ -12,14 +13,14 @@
             overflow: hidden;
         }
 
-        /* BACKGROUND IMAGE */
+        /* 🎬 BACKGROUND IMAGE (home.jpeg) */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
-            background: url("/static/images/{{ category }}.jpeg") center/cover no-repeat;
-            filter: brightness(0.3) blur(3px);
-            transform: scale(1.08);
+            background: url("/static/images/home.jpeg") center/cover no-repeat;
+            filter: brightness(0.35);
+            transform: scale(1.05);
             z-index: 0;
         }
 
@@ -29,13 +30,12 @@
             position: fixed;
             inset: 0;
             background: radial-gradient(circle at center,
-                rgba(0,0,0,0.15),
+                rgba(0,0,0,0.2),
                 rgba(0,0,0,0.92)
             );
             z-index: 0;
         }
 
-        /* CONTENT */
         .content {
             position: relative;
             z-index: 1;
@@ -46,63 +46,37 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-
-            animation: fadeIn 0.6s ease;
-        }
-
-        .tag {
-            font-size: 12px;
-            letter-spacing: 4px;
-            color: #e50914;
-            margin-bottom: 12px;
-            font-weight: 600;
         }
 
         h1 {
-            font-size: 60px;
+            font-size: 64px;
             margin: 0;
             font-weight: 900;
+            letter-spacing: 1px;
         }
 
         p {
-            margin-top: 14px;
+            margin-top: 12px;
             color: rgba(255,255,255,0.75);
             font-size: 18px;
-            max-width: 500px;
         }
 
         .btn {
-            margin-top: 40px;
-            padding: 16px 38px;
-
+            margin-top: 35px;
+            padding: 16px 40px;
             background: #e50914;
             border: none;
             color: white;
-
             font-size: 16px;
             font-weight: bold;
-
             border-radius: 40px;
             cursor: pointer;
-
             transition: 0.3s ease;
-            box-shadow: 0 12px 30px rgba(229,9,20,0.4);
         }
 
         .btn:hover {
             transform: scale(1.08);
             background: #ff0a16;
-        }
-
-        .hint {
-            margin-top: 20px;
-            font-size: 13px;
-            color: rgba(255,255,255,0.6);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(18px); }
-            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -111,17 +85,12 @@
 
 <div class="content">
 
-    <div class="tag">QUIZFLIX ORIGINAL</div>
+    <h1>QuizFlix</h1>
+    <p>Welcome to your cinematic quiz experience</p>
 
-    <h1>{{ category|capitalize }}</h1>
-
-    <p>One category. One challenge. Test how far your knowledge goes.</p>
-
-    <a href="/start/{{ category }}">
-        <button class="btn">▶ Start Quiz</button>
+    <a href="/home">
+        <button class="btn">Enter ▶</button>
     </a>
-
-    <div class="hint">Get ready before you begin</div>
 
 </div>
 

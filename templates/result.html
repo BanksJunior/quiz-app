@@ -55,7 +55,6 @@
             animation: fadeIn 0.6s ease;
         }
 
-        /* TITLE */
         h1 {
             font-size: 64px;
             margin: 0;
@@ -63,7 +62,6 @@
             animation: pop 0.6s ease;
         }
 
-        /* SCORE */
         .score {
             margin-top: 20px;
             font-size: 34px;
@@ -75,18 +73,14 @@
 
             background: rgba(255,255,255,0.08);
             border: 1px solid rgba(255,255,255,0.15);
-
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
 
-        /* MESSAGE */
         .message {
             margin-top: 12px;
             font-size: 16px;
             color: rgba(255,255,255,0.7);
         }
 
-        /* STATS */
         .stats {
             margin-top: 28px;
             display: flex;
@@ -176,14 +170,16 @@
 
     <h1>Episode Complete</h1>
 
+    <!-- SCORE -->
     <div class="score">
-        {{ score }} / {{ wrong|length + score }}
+        {{ score }} / {{ total }}
     </div>
 
     <div class="message">
         {{ category|capitalize }} Quiz Finished
     </div>
 
+    <!-- STATS -->
     <div class="stats">
         <div class="stat">
             <span>{{ score }}</span>
@@ -196,7 +192,9 @@
         </div>
     </div>
 
+    <!-- BUTTONS -->
     <div class="buttons">
+
         <a href="/">
             <button class="btn home">🏠 Browse Again</button>
         </a>
@@ -204,6 +202,13 @@
         <a href="/start/{{ category }}">
             <button class="btn retry">🔁 Replay</button>
         </a>
+
+        {% if wrong|length > 0 %}
+        <a href="/review">
+            <button class="btn retry">📘 Review</button>
+        </a>
+        {% endif %}
+
     </div>
 
 </div>

@@ -14,41 +14,9 @@
             min-height: 100vh;
             position: relative;
             color: white;
-        }
 
-        /* BACKGROUNDS */
-        body.anime {
-            background: url("/static/images/anime.jpg") no-repeat center center fixed;
-            background-size: cover;
-        }
-
-        body.animated_series {
-            background: url("/static/images/animated_series.jpeg") no-repeat center center fixed;
-            background-size: cover;
-        }
-
-        body.kdrama {
-            background: url("/static/images/kdrama.jpeg") no-repeat center center fixed;
-            background-size: cover;
-        }
-
-        body.football {
-            background: url("/static/images/football.jpeg") no-repeat center center fixed;
-            background-size: cover;
-        }
-
-        body.movies {
-            background: url("/static/images/movies.jpeg") no-repeat center center fixed;
-            background-size: cover;
-        }
-
-        body.music {
-            background: url("/static/images/music.jpeg") no-repeat center center fixed;
-            background-size: cover;
-        }
-
-        body.series {
-            background: url("/static/images/series.jpeg") no-repeat center center fixed;
+            /* 🔥 DYNAMIC BACKGROUND (MAIN FIX) */
+            background: url("/static/images/{{ category }}.jpeg") no-repeat center center fixed;
             background-size: cover;
         }
 
@@ -64,7 +32,7 @@
             z-index: 0;
         }
 
-        /* CARD (NETFLIX STYLE) */
+        /* CARD */
         .card {
             position: relative;
             z-index: 1;
@@ -129,7 +97,7 @@
             margin-bottom: 28px;
         }
 
-        /* OPTIONS (NETFLIX RED HOVER) */
+        /* OPTIONS */
         form button {
             width: 100%;
             padding: 16px;
@@ -187,7 +155,7 @@
     </style>
 </head>
 
-<body class="{{ category|lower|replace(' ', '_') }}">
+<body>
 
 <div class="card">
 

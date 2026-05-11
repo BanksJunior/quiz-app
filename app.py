@@ -5,13 +5,19 @@ app = Flask(__name__)
 app.secret_key = "quiz_secret_key"
 
 
-# ---------------- HOME ----------------
+# ---------------- LANDING PAGE (NEW FIRST PAGE) ----------------
 @app.route("/")
+def landing():
+    return render_template("landing.html")
+
+
+# ---------------- CATEGORY HOME PAGE ----------------
+@app.route("/home")
 def home():
     return render_template("home.html")
 
 
-# ---------------- INTRO PAGE (NEW NETFLIX STEP) ----------------
+# ---------------- INTRO PAGE ----------------
 @app.route("/intro/<category>")
 def intro(category):
 
@@ -92,6 +98,16 @@ def result():
     return render_template(
         "result.html",
         score=session.get("score", 0),
+        wrong=session.get("wrong", []),
+        category=session.get("category")
+    )
+
+
+# ---------------- REVIEW WRONG ANSWERS ----------------
+@app.route("/review")
+def review():
+    return render_template(
+        "review.html",
         wrong=session.get("wrong", []),
         category=session.get("category")
     )

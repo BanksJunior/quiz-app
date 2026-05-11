@@ -13,48 +13,63 @@
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
             color: white;
-            background: url("/static/images/home_bg.jpg") no-repeat center center fixed;
+
+            /* FULL BACKGROUND */
+            background: url("/static/images/home.jpeg") no-repeat center center fixed;
             background-size: cover;
+
+            position: relative;
+            min-height: 100vh;
+
+            overflow-x: hidden;
         }
 
-        /* DARK OVERLAY (Netflix style) */
+        /* CINEMATIC OVERLAY */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
+
             background: radial-gradient(circle at center,
-                rgba(0,0,0,0.2),
-                rgba(0,0,0,0.88)
+                rgba(0,0,0,0.20),
+                rgba(0,0,0,0.85),
+                rgba(0,0,0,0.96)
             );
+
             z-index: 0;
+        }
+
+        /* KEEP CONTENT ABOVE OVERLAY */
+        .header,
+        .grid,
+        .footer {
+            position: relative;
+            z-index: 1;
         }
 
         /* HEADER */
         .header {
-            position: relative;
-            z-index: 1;
             text-align: center;
             padding: 60px 20px 20px;
         }
 
         .header h1 {
-            font-size: 42px;
+            font-size: 52px;
             margin: 0;
-            font-weight: 800;
+            font-weight: 900;
+            letter-spacing: 1px;
         }
 
         .header p {
             color: rgba(255,255,255,0.7);
             margin-top: 10px;
+            font-size: 16px;
         }
 
-        /* CATEGORY GRID */
+        /* GRID */
         .grid {
-            position: relative;
-            z-index: 1;
-
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 18px;
 
             max-width: 900px;
@@ -64,44 +79,96 @@
 
         /* CATEGORY CARD */
         .card {
-            display: block;
+            position: relative;
+            height: 170px;
+            border-radius: 18px;
+            overflow: hidden;
+
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+
             text-decoration: none;
             color: white;
 
-            height: 120px;
-            border-radius: 14px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
             font-size: 18px;
-            font-weight: 700;
-
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.12);
-
-            backdrop-filter: blur(10px);
-
-            transition: all 0.25s ease;
-
-            text-transform: uppercase;
+            font-weight: 800;
             letter-spacing: 1px;
+            text-transform: uppercase;
+
+            background-size: cover;
+            background-position: center;
+
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+
+            transition: all 0.3s ease;
         }
 
         .card:hover {
-            transform: scale(1.08);
-            background: #e50914;
-            border-color: #e50914;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            transform: scale(1.07);
+            box-shadow: 0 18px 35px rgba(0,0,0,0.6);
         }
 
-        /* FOOTER TEXT */
-        .footer {
+        /* CARD OVERLAY */
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            background: rgba(0,0,0,0.35);
+
+            z-index: 0;
+        }
+
+        /* CARD TEXT */
+        .card span {
             position: relative;
             z-index: 1;
+
+            background: rgba(0,0,0,0.65);
+
+            padding: 8px 14px;
+            border-radius: 10px;
+
+            margin-bottom: 14px;
+        }
+
+        /* CATEGORY BACKGROUNDS */
+        .music {
+            background-image: url("/static/images/music.jpeg");
+        }
+
+        .kdrama {
+            background-image: url("/static/images/kdrama.jpeg");
+        }
+
+        .anime {
+            background-image: url("/static/images/anime.jpeg");
+        }
+
+        .animated_series {
+            background-image: url("/static/images/animated_series.jpeg");
+        }
+
+        .football {
+            background-image: url("/static/images/football.jpeg");
+        }
+
+        .movies {
+            background-image: url("/static/images/movies.jpeg");
+        }
+
+        .series {
+            background-image: url("/static/images/series.jpeg");
+        }
+
+        /* FOOTER */
+        .footer {
             text-align: center;
+
             margin-top: 40px;
+            padding-bottom: 20px;
+
             color: rgba(255,255,255,0.5);
             font-size: 13px;
         }
@@ -118,13 +185,33 @@
 
 <div class="grid">
 
-    <a class="card" href="/intro/music">Music</a>
-    <a class="card" href="/intro/kdrama">K-Drama</a>
-    <a class="card" href="/intro/anime">Anime</a>
-    <a class="card" href="/intro/animated_series">Animated</a>
-    <a class="card" href="/intro/football">Football</a>
-    <a class="card" href="/intro/movies">Movies</a>
-    <a class="card" href="/intro/series">Series</a>
+    <a class="card music" href="/intro/music">
+        <span>Music</span>
+    </a>
+
+    <a class="card kdrama" href="/intro/kdrama">
+        <span>K-Drama</span>
+    </a>
+
+    <a class="card anime" href="/intro/anime">
+        <span>Anime</span>
+    </a>
+
+    <a class="card animated_series" href="/intro/animated_series">
+        <span>Animated</span>
+    </a>
+
+    <a class="card football" href="/intro/football">
+        <span>Football</span>
+    </a>
+
+    <a class="card movies" href="/intro/movies">
+        <span>Movies</span>
+    </a>
+
+    <a class="card series" href="/intro/series">
+        <span>Series</span>
+    </a>
 
 </div>
 
